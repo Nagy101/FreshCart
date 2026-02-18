@@ -1,12 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import "./App.css";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  createHashRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./component/Layout/Layout.jsx";
 import Home from "./component/Home/Home.jsx";
 import Brand from "./component/Brand/Brand.jsx";
@@ -30,7 +25,7 @@ import FavContextProvider from "./Context/FavContext.jsx";
 import Resatpassword from "./component/ResatPassword/Resatpassword.jsx";
 import VerifyCode from "./component/VerifyCode/VerifyCode.jsx";
 
-const routers = createHashRouter([
+const routers = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
