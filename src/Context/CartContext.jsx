@@ -21,7 +21,7 @@ export default function CartContaxtProvider({ children }) {
         },
         {
           headers,
-        }
+        },
       );
       // console.log(data);
       getCartProduct();
@@ -36,7 +36,7 @@ export default function CartContaxtProvider({ children }) {
         "https://ecommerce.routemisr.com/api/v1/cart",
         {
           headers,
-        }
+        },
       );
       setCart(data);
       setNumberOfCart(data.numOfCartItems);
@@ -52,7 +52,7 @@ export default function CartContaxtProvider({ children }) {
         `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
         {
           headers,
-        }
+        },
       );
       setCart(data);
       toast.success("item deleted");
@@ -69,7 +69,7 @@ export default function CartContaxtProvider({ children }) {
         },
         {
           headers,
-        }
+        },
       );
       setCart(data);
       toast.success("success");
@@ -78,7 +78,9 @@ export default function CartContaxtProvider({ children }) {
     }
   }
   useEffect(() => {
-    getCartProduct();
+    if (localStorage.getItem("userToken")) {
+      getCartProduct();
+    }
   }, []);
   return (
     <CartContaxt.Provider

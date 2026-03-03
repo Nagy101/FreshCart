@@ -21,7 +21,7 @@ export default function VerifyCode() {
       setIsLoding(true);
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode",
-        { resetCode: verifyCode }
+        { resetCode: verifyCode },
       );
       toast.success(data.status);
       setIsLoding(false);
@@ -53,6 +53,7 @@ export default function VerifyCode() {
             type="tel"
             name="verifyCode"
             id="verifyCode"
+            autoComplete="one-time-code"
             className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-main focus:outline-none"
             placeholder="Enter your Verify Code"
             value={formik.values.verifyCode}

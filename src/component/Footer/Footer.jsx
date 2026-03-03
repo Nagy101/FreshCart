@@ -17,6 +17,7 @@ export default function Footer() {
             <i className="fas fa-envelope absolute left-3 top-4 text-gray-400"></i>
             <input
               type="email"
+              autoComplete="email"
               className="w-full p-3 pl-10 border border-gray-500 rounded-lg focus:ring-blue-400 focus:border-blue-400 text-black"
               placeholder="Enter Your Email"
               required

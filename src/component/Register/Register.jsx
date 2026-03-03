@@ -3,13 +3,13 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 
 export default function Register() {
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
-  let { setUserToken } = useContext(UserContext);
+  let { userToken, setUserToken } = useContext(UserContext);
   let navigate = useNavigate();
 
   async function register(values) {
@@ -17,7 +17,7 @@ export default function Register() {
       setLoading(true);
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signup",
-        values
+        values,
       );
       localStorage.setItem("userToken", data.token);
       setUserToken(data.token);
@@ -57,6 +57,8 @@ export default function Register() {
     onSubmit: register,
   });
 
+  if (userToken) return <Navigate to="/" replace />;
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <form
@@ -70,12 +72,27 @@ export default function Register() {
           <div className="text-red-500 text-sm mb-4">{apiError}</div>
         )}
         {[
-          { label: "Name", name: "name", type: "text" },
-          { label: "Email", name: "email", type: "email" },
-          { label: "Password", name: "password", type: "password" },
-          { label: "Confirm Password", name: "rePassword", type: "password" },
-          { label: "Phone", name: "phone", type: "tel" },
-        ].map(({ label, name, type }) => (
+          { label: "Name", name: "name", type: "text", autoComplete: "name" },
+          {
+            label: "Email",
+            name: "email",
+            type: "email",
+            autoComplete: "email",
+          },
+          {
+            label: "Password",
+            name: "password",
+            type: "password",
+            autoComplete: "new-password",
+          },
+          {
+            label: "Confirm Password",
+            name: "rePassword",
+            type: "password",
+            autoComplete: "new-password",
+          },
+          { label: "Phone", name: "phone", type: "tel", autoComplete: "tel" },
+        ].map(({ label, name, type, autoComplete }) => (
           <div key={name} className="mb-4">
             <label
               htmlFor={name}
@@ -88,6 +105,7 @@ export default function Register() {
               id={name}
               name={name}
               placeholder={`Enter Your ${name} `}
+              autoComplete={autoComplete}
               className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
               value={formik.values[name]}
               onChange={formik.handleChange}

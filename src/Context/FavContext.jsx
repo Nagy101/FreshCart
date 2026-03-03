@@ -19,7 +19,7 @@ export default function FavContextProvider({ children }) {
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/wishlist",
         { productId },
-        { headers }
+        { headers },
       );
       getFavProduct();
       toast.success(data.message);
@@ -33,14 +33,16 @@ export default function FavContextProvider({ children }) {
     try {
       let { data } = await axios.get(
         "https://ecommerce.routemisr.com/api/v1/wishlist",
-        { headers }
+        { headers },
       );
       setFavProduct(data.data);
       setFavCount(data.count);
       console.log(data);
     } catch (error) {
+      if (error.response?.status !== 401) {
+        toast.error("Failed to fetch favorite products");
+      }
       console.log(error);
-      toast.error("Failed to fetch favorite products");
     }
   }
 
@@ -49,13 +51,15 @@ export default function FavContextProvider({ children }) {
       `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
       {
         headers,
-      }
+      },
     );
     getFavProduct();
     toast.success(data.message);
   }
   useEffect(() => {
-    getFavProduct();
+    if (localStorage.getItem("userToken")) {
+      getFavProduct();
+    }
   }, []);
 
   return (

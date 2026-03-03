@@ -25,7 +25,7 @@ export default function ProductDetails() {
   };
   async function getProducts(productId) {
     let { data } = await axios.get(
-      `https://ecommerce.routemisr.com/api/v1/products/${productId}`
+      `https://ecommerce.routemisr.com/api/v1/products/${productId}`,
     );
     console.log(data.data);
     setproduct(data.data);
@@ -39,34 +39,80 @@ export default function ProductDetails() {
       {loding ? (
         <Loding />
       ) : (
-        <div className="flex p-8 items-center gap-5">
-          <div className="w-1/5">
-            <Slider {...settings}>
-              <div>{<img src={product.imageCover} alt={product.title} />}</div>
-              {product.images.map((image, index) => (
-                <div key={index}>
-                  <img src={image} />
+        <div className="max-w-5xl mx-auto px-4 py-8">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-0">
+            {/* Image Slider */}
+            <div className="md:w-2/5 bg-gray-50 p-6 flex items-center justify-center">
+              <Slider {...settings} className="w-full">
+                <div>
+                  <img
+                    src={product.imageCover}
+                    alt={product.title}
+                    className="w-full h-72 object-contain rounded-xl"
+                  />
                 </div>
-              ))}
-            </Slider>
-          </div>
-          <div className="w-3/4 ps-5">
-            <h2 className="">{product.title}</h2>
-            <p className="text-gray-500 m-2 py-4">{product.description}</p>
-            <h3 className="">{product.category.name}</h3>
-            <div className="flex justify-between">
-              <h4>{product.price} EGP</h4>
-              <p>
-                <i className="fa-solid fa-star rating-color" />
-                {product.ratingsAverage}
-              </p>
+                {product.images.map((image, index) => (
+                  <div key={index}>
+                    <img
+                      src={image}
+                      alt={`${product.title} ${index + 1}`}
+                      className="w-full h-72 object-contain rounded-xl"
+                    />
+                  </div>
+                ))}
+              </Slider>
             </div>
-            <button
-              onClick={() => addProductToCart(product.id)}
-              className="btn w-full py-2 my-3"
-            >
-              Add To Cart
-            </button>
+
+            {/* Product Info */}
+            <div className="md:w-3/5 p-8 flex flex-col justify-between">
+              <div>
+                <span className="inline-block text-xs font-semibold text-main bg-blue-50 px-3 py-1 rounded-full mb-3 uppercase tracking-wide">
+                  {product.category.name}
+                </span>
+                <h1 className="text-2xl font-bold text-gray-900 leading-snug mb-3">
+                  {product.title}
+                </h1>
+                <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                  {product.description}
+                </p>
+
+                <div className="flex items-center gap-1 text-yellow-400 mb-5">
+                  {[...Array(5)].map((_, i) => (
+                    <i
+                      key={i}
+                      className={`fa-star ${
+                        i < Math.round(product.ratingsAverage)
+                          ? "fa-solid"
+                          : "fa-regular"
+                      }`}
+                    />
+                  ))}
+                  <span className="ml-2 text-sm text-gray-500">
+                    {product.ratingsAverage} / 5
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-3xl font-extrabold text-gray-900">
+                    {product.price.toLocaleString()} EGP
+                  </span>
+                  {product.priceAfterDiscount && (
+                    <span className="text-sm line-through text-gray-400">
+                      {product.priceAfterDiscount} EGP
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={() => addProductToCart(product.id)}
+                  className="w-full bg-main hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition duration-200 flex items-center justify-center gap-2"
+                >
+                  <i className="fa-solid fa-cart-plus" />
+                  Add To Cart
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

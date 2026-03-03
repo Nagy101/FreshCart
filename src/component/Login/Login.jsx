@@ -3,14 +3,14 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import toast from "react-hot-toast";
 
 export default function Login() {
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
-  let { setUserToken } = useContext(UserContext);
+  let { userToken, setUserToken } = useContext(UserContext);
   let navigate = useNavigate();
 
   let validationSchema = Yup.object().shape({
@@ -25,7 +25,7 @@ export default function Login() {
       setLoading(true);
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signin",
-        values
+        values,
       );
       localStorage.setItem("userToken", data.token);
       setUserToken(data.token);
@@ -45,6 +45,8 @@ export default function Login() {
     validationSchema,
     onSubmit: login,
   });
+
+  if (userToken) return <Navigate to="/" replace />;
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mt-12 py-7 mb-6">
@@ -70,6 +72,7 @@ export default function Login() {
             name="email"
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
             placeholder="Enter your email"
+            autoComplete="email"
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -92,6 +95,7 @@ export default function Login() {
             name="password"
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
             placeholder="Enter your password"
+            autoComplete="current-password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

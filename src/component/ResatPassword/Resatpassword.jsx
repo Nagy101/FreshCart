@@ -25,7 +25,7 @@ export default function Resatpassword() {
         {
           email,
           newPassword,
-        }
+        },
       );
       console.log(data);
       toast.success("updated password success");
@@ -34,7 +34,7 @@ export default function Resatpassword() {
     } catch (error) {
       console.log(error);
       setIsLoding(false);
-      toast.error('error in email or password');
+      toast.error("error in email or password");
     }
   }
 
@@ -55,15 +55,16 @@ export default function Resatpassword() {
           className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
         >
           <h2 className="text-center text-2xl font-semibold text-main mb-6">
-            Resat Password
+            Reset Password
           </h2>
           <div className="relative mb-4">
             <input
               type="email"
               name="email"
               id="email"
+              autoComplete="email"
               className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-main focus:outline-none"
-              placeholder="Enter your Verify Code"
+              placeholder="Enter your email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -77,6 +78,7 @@ export default function Resatpassword() {
               type="password"
               name="newPassword"
               id="newPassword"
+              autoComplete="new-password"
               className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-main focus:outline-none"
               placeholder="Enter your new Password"
               value={formik.values.newPassword}

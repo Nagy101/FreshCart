@@ -65,18 +65,18 @@ export default function Cart() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 min-w-[130px]">
                       <button
                         onClick={() => addFavProduct(item.product.id)}
-                        className=""
+                        className="flex items-center gap-1 text-sm text-main border border-main px-3 py-1.5 rounded-lg hover:bg-blue-50 transition"
                       >
-                        Add to Favorites
+                        <i className="fa-regular fa-heart" /> Wishlist
                       </button>
                       <button
                         onClick={() => deleteProduct(item.product.id)}
-                        className="text-red-700 "
+                        className="flex items-center gap-1 text-sm text-red-600 border border-red-300 px-3 py-1.5 rounded-lg hover:bg-red-50 transition"
                       >
-                        Remove
+                        <i className="fa-solid fa-trash" /> Remove
                       </button>
                     </div>
                   </div>
@@ -97,7 +97,7 @@ export default function Cart() {
                   </div>
                 </div>
                 <Link to={"/checkout"}>
-                  <button className="w-full mt-4   text-white py-2 rounded-lg ">
+                  <button className="w-full mt-4 bg-main text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200">
                     Proceed to Checkout
                   </button>
                 </Link>

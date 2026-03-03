@@ -14,22 +14,34 @@ export default function Pagenation({
   }
   // const [loding, setLoding] = useState(true);
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex justify-center items-center gap-1 mt-8 mb-4">
+      <button
+        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+        disabled={currentPage === 1}
+        className="px-3 py-1 mx-1 border border-main rounded-md text-main disabled:opacity-30 disabled:cursor-not-allowed hover:bg-main hover:text-white transition"
+      >
+        ‹
+      </button>
       {pages.map((page, index) => (
         <button
           key={index}
-          onClick={() => {
-            setCurrentPage(page);
-          }}
-          className={`px-3 py-1 mx-1 border rounded ${
+          onClick={() => setCurrentPage(page)}
+          className={`px-3 py-1 mx-1 border rounded-md transition ${
             page === currentPage
-              ? "bg-blue-500 text-white"
-              : "bg-white text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white"
+              ? "bg-main text-white border-main shadow"
+              : "bg-white text-main border-main hover:bg-main hover:text-white"
           }`}
         >
           {page}
         </button>
       ))}
+      <button
+        onClick={() => setCurrentPage((p) => Math.min(p + 1, pages.length))}
+        disabled={currentPage === pages.length}
+        className="px-3 py-1 mx-1 border border-main rounded-md text-main disabled:opacity-30 disabled:cursor-not-allowed hover:bg-main hover:text-white transition"
+      >
+        ›
+      </button>
     </div>
   );
 }

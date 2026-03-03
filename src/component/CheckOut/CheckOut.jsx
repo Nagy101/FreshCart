@@ -7,7 +7,6 @@ import "./CheckOut.css";
 import { useNavigate } from "react-router-dom";
 import { CartContaxt } from "../../Context/CartContext";
 
-
 export default function CheckOut() {
   const [loading, setLoading] = useState(false);
   let { cart } = useContext(CartContaxt);
@@ -35,9 +34,8 @@ export default function CheckOut() {
         {
           params: {
             url: "https://nagy101.github.io/onlinemarkt/#",
-            
           },
-        }
+        },
       );
 
       toast.success("Order Placed Successfully!");
@@ -74,6 +72,7 @@ export default function CheckOut() {
             type="text"
             id="city"
             name="city"
+            autoComplete="address-level2"
             placeholder="Enter your city"
             value={formik.values.city}
             onChange={formik.handleChange}
@@ -90,6 +89,7 @@ export default function CheckOut() {
             type="text"
             id="address"
             name="address"
+            autoComplete="street-address"
             placeholder="Enter your address"
             value={formik.values.address}
             onChange={formik.handleChange}
@@ -106,6 +106,7 @@ export default function CheckOut() {
             type="tel"
             id="phone"
             name="phone"
+            autoComplete="tel"
             placeholder="Enter your phone number"
             value={formik.values.phone}
             onChange={formik.handleChange}

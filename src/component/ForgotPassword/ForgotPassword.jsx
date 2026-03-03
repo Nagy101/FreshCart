@@ -20,7 +20,7 @@ export default function ForgotPassword() {
       setIsLoding(true);
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords",
-        values
+        values,
       );
       toast.success(data.message);
       setIsLoding(false);
@@ -51,6 +51,7 @@ export default function ForgotPassword() {
             type="email"
             name="email"
             id="email"
+            autoComplete="email"
             className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-main focus:outline-none"
             placeholder="Enter your email"
             value={formik.values.email}
